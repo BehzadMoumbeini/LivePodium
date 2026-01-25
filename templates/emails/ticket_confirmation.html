@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .header { background: #1e40af; color: white; padding: 30px; text-align: center; }
+        .content { padding: 30px; }
+        .ticket { border: 2px dashed #1e40af; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center; background: #f8fafc; }
+        .footer { background: #1e3a8a; color: white; text-align: center; padding: 20px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>LivePodium</h1>
+            <h2>Je tickets zijn bevestigd! 🎉</h2>
+        </div>
+        <div class="content">
+            <p>Beste {{ user.username }},</p>
+            <p>Bedankt voor je aankoop! Hier zijn je tickets voor:</p>
+            <h3 style="color: #1e40af;">{{ event.title }}</h3>
+            <p><strong>Artiest:</strong> {{ event.artist }}</p>
+            <p><strong>Datum:</strong> {{ event.date|date:"l d F Y om H:i" }}</p>
+            <p><strong>Locatie:</strong> {{ event.venue.name }}, {{ event.venue.city }}</p>
+            <p><strong>Aantal tickets:</strong> {{ quantity }}</p>
+            <p><strong>Totaal betaald:</strong> €{{ total_price }}</p>
+
+            <hr style="margin: 40px 0;">
+
+            <p style="font-size: 18px; font-weight: bold;">Je e-tickets:</p>
+            {% for ticket in tickets %}
+            <div class="ticket">
+                <p><strong>Ticket {{ forloop.counter }}</strong></p>
+                <img src="cid:ticket_{{ forloop.counter }}.png" alt="QR Ticket {{ forloop.counter }}" style="width: 250px; height: 250px;">
+                <p>Toon deze QR-code bij de ingang</p>
+            </div>
+            {% endfor %}
+
+            <p>Heb je vragen? Neem contact op via info@livepodium.nl</p>
+            <p>Veel plezier op het concert!</p>
+            <p>— Het LivePodium team</p>
+        </div>
+        <div class="footer">
+            &copy; 2025 LivePodium.nl • Alle rechten voorbehouden
+        </div>
+    </div>
+</body>
+</html>

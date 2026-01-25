@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <h2 class="text-4xl font-bold text-primary mb-8 text-center">Mijn Tickets</h2>
+    
+    {% if orders %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {% for order in orders %}
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h3 class="text-2xl font-semibold">{{ order.event.title }}</h3>
+                    <p class="text-gray-600">{{ order.event.date|date:"d M Y, H:i" }} • {{ order.event.venue.name }}</p>
+                    <p class="mt-4 text-xl">Aantal tickets: {{ order.quantity }}</p>
+                    
+                    <div class="mt-6 grid grid-cols-1 sm:grid-cols-{{ order.quantity }} gap-6">
+                        {% for ticket in order.tickets.all %}
+                            <div class="text-center">
+                                <img src="{{ ticket.qr_code.url }}" alt="QR Ticket" class="mx-auto w-64 h-64">
+                                <p class="mt-2 font-medium">Ticket {{ forloop.counter }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-2xl text-gray-600">Je hebt nog geen tickets gekocht.</p>
+        <p class="text-center mt-4"><a href="{% url 'home' %}" class="text-primary underline text-xl">Bekijk events</a></p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center py-16">
+    <h1 class="text-5xl font-bold text-green-600 mb-8">Betaling Geslaagd! 🎉</h1>
+    <p class="text-2xl mb-8">Bedankt voor je aankoop van {{ order.quantity }} ticket(s) voor {{ order.event.title }}</p>
+    <div class="grid grid-cols-1 md:grid-cols-{{ order.quantity }} gap-8 max-w-4xl mx-auto">
+        {% for ticket in order.tickets.all %}
+            <div>
+                <img src="{{ ticket.qr_code.url }}" alt="QR Ticket" class="mx-auto">
+                <p class="mt-4 text-lg">Ticket {{ forloop.counter }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <p class="mt-12 text-lg">Je tickets zijn ook per e-mail verstuurd.</p>
+</div>
+{% endblock %}
